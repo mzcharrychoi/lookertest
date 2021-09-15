@@ -2,6 +2,47 @@ view: ga_sessions {
   sql_table_name: `GMC_PoC.ga_sessions`
     ;;
 
+  parameter: p_first_metric {
+    label: "Choose First Metric"
+    type: string
+    allowed_value: {label: "channel Grouping" value: "channel Grouping" }
+    allowed_value: {label: "Browser" value: "Browser" }
+    allowed_value: {label: "Region" value: "Region" }
+  }
+
+  dimension: First_metric {
+    type: string
+    sql:
+    {% if p_first_metric._parameter_value == "'channel Grouping'"%}
+      ${channel_grouping}
+    {% elsif p_first_metric._parameter_value == "'Browser'"%}
+      ${device__browser}
+    {% elsif p_first_metric._parameter_value == "'Region'"%}
+      ${geo_network__region}
+    {%endif%}
+      ;;
+  }
+
+  measure: dynamic_title_trend{
+    type: max
+    sql: 1 ;;
+    html: <p style =
+              "color: #412399;
+              font-size:80%;
+              text-align:left">
+              {{ p_first_metric._parameter_value }} Performance Trend
+          </p>;;
+  }
+  measure: dynamic_title_bar{
+    type: max
+    sql: 1 ;;
+    html: <p style =
+              "color: #412399;
+              font-size:80%;
+              text-align:left">
+              {{_filters['device__operating_system']}} Performance Trend per Channel Grouping
+          </p>;;
+  }
 
 
   dimension: channel_grouping {
