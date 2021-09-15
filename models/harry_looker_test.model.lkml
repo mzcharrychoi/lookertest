@@ -1,15 +1,16 @@
-connection: "20210910harry"
+connection: "crystal_test1"
 
 # include all the views
 include: "/views/**/*.view"
 # include: "/dashboards/**/*.dashboard"
 
-datagroup: harry_looker_test_default_datagroup {
+datagroup: crystal_test_default_datagroup {
   sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
+  # max_cache_age: "1 hour"
+  max_cache_age: "10 minutes"
 }
 
-persist_with: harry_looker_test_default_datagroup
+persist_with: crystal_test_default_datagroup
 
 explore: ga_sessions {
   join: ga_sessions__hits {
@@ -24,11 +25,10 @@ explore: ga_sessions {
     relationship: one_to_many
   }
 
-  access_filter:  {
-    field:  geo_network__country
+  access_filter: {
+    field: geo_network__country
     user_attribute: country
   }
-  }
 
 
-
+}
