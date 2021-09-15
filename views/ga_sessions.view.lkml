@@ -22,6 +22,12 @@ view: ga_sessions {
     sql: ${TABLE}.date ;;
   }
 
+  dimension: date_formatted {
+    type:  date
+    datatype: date
+    sql:  PARSE_DATE(%Y%m%d, ${TABLE}.date) ;;
+  }
+
   dimension: device__browser {
     type: string
     sql: ${TABLE}.device.browser ;;
@@ -262,6 +268,7 @@ view: ga_sessions {
   }
 
   dimension: totals__screenviews {
+    hidden: yes
     type: number
     sql: ${TABLE}.totals.screenviews ;;
     group_label: "Totals"
