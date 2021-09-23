@@ -9,7 +9,7 @@ view: d_item {
   }
 
   dimension: item_number {
-    label: "아이템 코드값"
+    label: "아이템 코드"
     type: string
     sql: ${TABLE}.item_number ;;
   }
